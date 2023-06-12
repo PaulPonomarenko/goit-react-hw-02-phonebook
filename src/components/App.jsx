@@ -53,9 +53,7 @@ export class App extends React.Component {
     const visibleContact = this.showVisibleContact();
     return (
       <>
-        <h2>PHONEBOOK</h2>
         <FormData onSubmit={this.onSubmit} />
-        <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
         <Contacts contacts={visibleContact} onDelete={this.deleteContact} />
       </>
