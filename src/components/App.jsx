@@ -3,6 +3,7 @@ import { FormData } from './FormData/FormData';
 import { Contacts } from './Contacts/Contacts';
 import { nanoid } from 'nanoid';
 import { Filter } from './Filter/Filter';
+
 export class App extends React.Component {
   state = {
     contacts: [
@@ -12,19 +13,22 @@ export class App extends React.Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
   onSubmit = data => {
     const { name, number } = data;
+    console.log(name);
     const contact = {
       name: name,
       number: number,
       id: nanoid(),
     };
-    this.setState(prevState => ({
-      contacts: [contact, ...prevState.contacts],
-    }));
+    if (this.state.contacts.find(contact => contact.name === name)) {
+      return alert(`Ooops, ${name} is already in contacts`);
+    } else {
+      return this.setState(prevState => ({
+        contacts: [contact, ...prevState.contacts],
+      }));
+    }
   };
   changeFilter = event => {
     this.setState({ filter: event.target.value });
@@ -38,6 +42,11 @@ export class App extends React.Component {
     );
     return filtred;
   };
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
 
   render() {
     const { filter } = this.state;
@@ -48,7 +57,7 @@ export class App extends React.Component {
         <FormData onSubmit={this.onSubmit} />
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
-        <Contacts contacts={visibleContact} />
+        <Contacts contacts={visibleContact} onDelete={this.deleteContact} />
       </>
     );
   }
