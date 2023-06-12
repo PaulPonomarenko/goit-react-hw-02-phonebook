@@ -14,15 +14,17 @@ export class App extends React.Component {
     ],
     filter: '',
   };
-  onSubmit = data => {
-    const { name, number } = data;
-    console.log(name);
+
+  onSubmit = ({ name, number }) => {
     const contact = {
       name: name,
       number: number,
       id: nanoid(),
     };
-    if (this.state.contacts.find(contact => contact.name === name)) {
+    const findContact = this.state.contacts.find(
+      contact => contact.name === name
+    );
+    if (findContact) {
       return alert(`Ooops, ${name} is already in contacts`);
     } else {
       return this.setState(prevState => ({
@@ -30,9 +32,9 @@ export class App extends React.Component {
       }));
     }
   };
+
   changeFilter = event => {
     this.setState({ filter: event.target.value });
-    console.log(event.target.value);
   };
 
   showVisibleContact = () => {
@@ -42,6 +44,7 @@ export class App extends React.Component {
     );
     return filtred;
   };
+
   deleteContact = contactId => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),

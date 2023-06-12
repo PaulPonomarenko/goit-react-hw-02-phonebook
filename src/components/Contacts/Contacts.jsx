@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './Contacts.module.css';
+
 export const Contacts = ({ contacts, onDelete }) => {
   return (
     <>
@@ -29,6 +30,7 @@ export const Contacts = ({ contacts, onDelete }) => {
     </>
   );
 };
+
 Contacts.propTypes = {
   onDelete: PropTypes.func.isRequired,
   contacts: PropTypes.arrayOf(

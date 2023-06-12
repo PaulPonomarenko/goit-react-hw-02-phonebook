@@ -1,11 +1,13 @@
 import React from 'react';
 import css from './FormData.module.css';
 import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 
 const INITIAL_STATE = {
   name: '',
   number: '',
 };
+
 export class FormData extends React.Component {
   state = { ...INITIAL_STATE };
 
@@ -13,14 +15,17 @@ export class FormData extends React.Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
   handleSubmit = event => {
     event.preventDefault();
     this.props.onSubmit(this.state);
     this.resetInput();
   };
+
   resetInput = () => {
     this.setState(INITIAL_STATE);
   };
+
   render() {
     const { name, number } = this.state;
     const idName = nanoid();
@@ -73,3 +78,7 @@ export class FormData extends React.Component {
     );
   }
 }
+
+FormData.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
